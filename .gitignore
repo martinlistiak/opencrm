@@ -1,0 +1,25 @@
+# Rust
+backend/target/
+backend/.env
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+
+# SQLx offline data (generated, can be committed for CI)
+# backend/.sqlx/

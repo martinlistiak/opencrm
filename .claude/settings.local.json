@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:kerkour.com)",
+      "Bash(rustc:*)",
+      "Bash(cargo --version:*)",
+      "Bash(node --version:*)",
+      "Bash(npm:*)",
+      "Bash(export PATH:*)",
+      "Bash(psql:*)",
+      "Bash(export:*)",
+      "Bash(pg_isready:*)",
+      "Bash(git init:*)",
+      "Bash(cargo init:*)",
+      "Bash(cargo check:*)",
+      "Bash(timeout 10 cargo run:*)",
+      "Bash(npx tsc:*)",
+      "Bash([ -s \"$NVM_DIR/nvm.sh\" ])",
+      "Bash(. \"$NVM_DIR/nvm.sh\")",
+      "Bash(source \"$HOME/.cargo/env\")",
+      "Bash(cargo run:*)",
+      "Bash(/opt/homebrew/bin/psql:*)",
+      "Bash(lsof:*)",
+      "Bash(kill:*)",
+      "Bash(cargo build:*)",
+      "Bash(xargs kill:*)"
+    ]
+  }
+}
