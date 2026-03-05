@@ -21,7 +21,7 @@ FROM node:22-alpine AS frontend-builder
 
 WORKDIR /app
 
-COPY frontend/package.json yarn.lock ./
+COPY frontend/package.json frontend/yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 COPY frontend/ .
