@@ -9,7 +9,6 @@ mod errors;
 mod pipeline;
 mod positions;
 mod startup;
-mod uploads;
 
 #[tokio::main]
 async fn main() {
