@@ -21,11 +21,11 @@ FROM node:22-alpine AS frontend-builder
 
 WORKDIR /app
 
-COPY frontend/package.json frontend/package-lock.json ./
-RUN npm ci
+COPY frontend/package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
 COPY frontend/ .
-RUN npm run build
+RUN yarn build
 
 # Stage 3: Runtime
 FROM debian:bookworm-slim
