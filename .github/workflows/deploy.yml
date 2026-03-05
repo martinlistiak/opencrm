@@ -1,0 +1,13 @@
+name: Deploy to CapRover
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger CapRover deployment
+        run: |
+          curl -X POST "https://captain.lab.foxapps.tech/api/v2/user/apps/webhooks/triggerbuild?namespace=captain&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InRva2VuVmVyc2lvbiI6ImIzMjUyYTQzLWQwNDQtNGIyYy04OTZmLTU3NzFkMDAxMjMzMyIsImFwcE5hbWUiOiJvcGVuY3JtIiwibmFtZXNwYWNlIjoiY2FwdGFpbiJ9LCJpYXQiOjE3NzI3MjIzODR9.gGPUcPXgy6U-i4hQtM2OJ4yUuSLDlupaoDUNb3P8CGk"
