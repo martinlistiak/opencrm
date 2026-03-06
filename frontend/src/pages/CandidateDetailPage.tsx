@@ -28,35 +28,35 @@ export function CandidateDetailPage() {
   return (
     <div>
       <div className="mb-6">
-        <Link to="/candidates" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4">
+        <Link to="/candidates" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-1" /> Back to Candidates
         </Link>
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
               {candidate.first_name} {candidate.last_name}
             </h1>
             <p className="text-gray-500 mt-1">{candidate.current_title || 'No current title'}</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {candidate.linkedin_url && (
               <a href={candidate.linkedin_url} target="_blank" rel="noopener noreferrer">
-                <Button variant="secondary"><Linkedin className="h-4 w-4 mr-2" />LinkedIn</Button>
+                <Button variant="secondary" size="sm"><Linkedin className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">LinkedIn</span></Button>
               </a>
             )}
             {candidate.cv_file_path && id && (
               <a href={candidatesApi.downloadCvUrl(id)} download>
-                <Button variant="secondary"><Download className="h-4 w-4 mr-2" />CV</Button>
+                <Button variant="secondary" size="sm"><Download className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">CV</span></Button>
               </a>
             )}
             {canEdit && (
               <Link to={`/candidates/${id}/edit`}>
-                <Button variant="secondary"><Edit className="h-4 w-4 mr-2" />Edit</Button>
+                <Button variant="secondary" size="sm"><Edit className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">Edit</span></Button>
               </Link>
             )}
             {user?.role === 'admin' && (
-              <Button variant="danger" onClick={handleDelete}>
-                <Trash2 className="h-4 w-4 mr-2" />Delete
+              <Button variant="danger" size="sm" onClick={handleDelete}>
+                <Trash2 className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">Delete</span>
               </Button>
             )}
           </div>
@@ -67,10 +67,10 @@ export function CandidateDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Contact Information</h2>
-            <dl className="grid grid-cols-2 gap-4 text-sm">
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
                 <dt className="text-gray-500">Email</dt>
-                <dd className="mt-1">{candidate.email || '-'}</dd>
+                <dd className="mt-1 break-all">{candidate.email || '-'}</dd>
               </div>
               <div>
                 <dt className="text-gray-500">Phone</dt>
@@ -89,7 +89,7 @@ export function CandidateDetailPage() {
 
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Professional Details</h2>
-            <dl className="grid grid-cols-2 gap-4 text-sm">
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
                 <dt className="text-gray-500">Seniority</dt>
                 <dd className="mt-1 capitalize">{candidate.seniority || '-'}</dd>

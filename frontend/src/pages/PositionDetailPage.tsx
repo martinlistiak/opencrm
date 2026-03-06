@@ -28,26 +28,26 @@ export function PositionDetailPage() {
   return (
     <div>
       <div className="mb-6">
-        <Link to="/positions" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4">
+        <Link to="/positions" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-1" /> Back to Positions
         </Link>
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{position.title}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{position.title}</h1>
             <p className="text-gray-500 mt-1">{position.client_name}</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Link to={`/positions/${id}/pipeline`}>
-              <Button variant="secondary"><ExternalLink className="h-4 w-4 mr-2" />Pipeline</Button>
+              <Button variant="secondary" size="sm"><ExternalLink className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">Pipeline</span></Button>
             </Link>
             {(user?.role === 'admin' || user?.role === 'recruiter') && (
               <Link to={`/positions/${id}/edit`}>
-                <Button variant="secondary"><Edit className="h-4 w-4 mr-2" />Edit</Button>
+                <Button variant="secondary" size="sm"><Edit className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">Edit</span></Button>
               </Link>
             )}
             {user?.role === 'admin' && (
-              <Button variant="danger" onClick={handleDelete}>
-                <Trash2 className="h-4 w-4 mr-2" />Delete
+              <Button variant="danger" size="sm" onClick={handleDelete}>
+                <Trash2 className="h-4 w-4 sm:mr-1.5" /><span className="hidden sm:inline">Delete</span>
               </Button>
             )}
           </div>
@@ -59,7 +59,7 @@ export function PositionDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <h2 className="text-lg font-semibold mb-4">Details</h2>
-            <dl className="grid grid-cols-2 gap-4 text-sm">
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
                 <dt className="text-gray-500">Status</dt>
                 <dd className="mt-1"><Badge variant={position.status === 'open' ? 'green' : 'gray'}>{position.status.replace('_', ' ')}</Badge></dd>
@@ -118,7 +118,7 @@ export function PositionDetailPage() {
           {pipeline ? (
             <div className="space-y-3">
               {Object.entries(pipeline.stages)
-                .filter(([_, apps]) => apps.length > 0)
+                .filter(([, apps]) => apps.length > 0)
                 .map(([stage, apps]) => (
                   <div key={stage} className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">{STAGE_LABELS[stage as PipelineStage] || stage}</span>

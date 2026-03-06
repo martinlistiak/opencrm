@@ -120,7 +120,7 @@ export function CandidateFormPage() {
       <Link to="/candidates" className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4">
         <ArrowLeft className="h-4 w-4 mr-1" /> Back to Candidates
       </Link>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+      <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
         {isEditing ? 'Edit Candidate' : 'New Candidate'}
       </h1>
 
