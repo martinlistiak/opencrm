@@ -15,26 +15,38 @@ pub const VALID_STAGES: &[&str] = &[
 ];
 
 pub fn is_valid_transition(from: &str, to: &str) -> bool {
-    matches!(
-        (from, to),
-        ("sourced", "contacted")
-            | ("sourced", "rejected")
-            | ("sourced", "withdrawn")
-            | ("contacted", "submitted")
-            | ("contacted", "rejected")
-            | ("contacted", "withdrawn")
-            | ("submitted", "interview")
-            | ("submitted", "rejected")
-            | ("submitted", "withdrawn")
-            | ("interview", "offered")
-            | ("interview", "rejected")
-            | ("interview", "withdrawn")
-            | ("offered", "placed")
-            | ("offered", "rejected")
-            | ("offered", "withdrawn")
-            | ("rejected", "sourced")
-            | ("withdrawn", "sourced")
-    )
+    if from == to {
+        return false;
+    }
+
+    const ACTIVE: &[&str] = &[
+        "sourced",
+        "contacted",
+        "submitted",
+        "interview",
+        "offered",
+        "placed",
+    ];
+
+    let from_active = ACTIVE.contains(&from);
+    let to_active = ACTIVE.contains(&to);
+
+    // Allow any move between active stages (forward and backward)
+    if from_active && to_active {
+        return true;
+    }
+
+    // Allow moving to rejected/withdrawn from any active stage
+    if from_active && (to == "rejected" || to == "withdrawn") {
+        return true;
+    }
+
+    // Allow re-activating from rejected/withdrawn back to sourced
+    if (from == "rejected" || from == "withdrawn") && to == "sourced" {
+        return true;
+    }
+
+    false
 }
 
 #[derive(Debug, Clone, Serialize, FromRow)]
