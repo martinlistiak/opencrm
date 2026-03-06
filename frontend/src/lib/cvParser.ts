@@ -51,7 +51,7 @@ function escapeRegex(s: string): string {
 
 function extractEmail(text: string): string | undefined {
   const match = text.match(
-    /\b[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\b/,
+    /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/,
   );
   return match?.[0];
 }
@@ -75,11 +75,14 @@ function extractPhone(text: string): string | undefined {
 }
 
 function extractLinkedIn(text: string): string | undefined {
-  const match = text.match(
-    /(?:https?:\/\/)?(?:www\.)?linkedin\.com\/in\/[A-Za-z0-9_-]+\/?/i,
-  );
+  // PDF text extraction can introduce whitespace around dashes/slashes in URLs.
+  // First try a permissive pattern that allows optional spaces around dashes
+  // within the profile slug, then collapse whitespace to reconstruct the URL.
+  const loosePattern =
+    /(?:https?:\/\/)?(?:www\.)?linkedin\.com\s*\/\s*in\s*\/\s*[A-Za-z0-9_]+(?:\s*[-]\s*[A-Za-z0-9_]+)*\/?/i;
+  const match = text.match(loosePattern);
   if (match) {
-    const url = match[0];
+    const url = match[0].replace(/\s+/g, '');
     return url.startsWith('http') ? url : `https://${url}`;
   }
   return undefined;
@@ -261,8 +264,8 @@ export function parseCvText(result: ExtractionResult): ParsedCandidate {
     notes: [
       '[Auto-imported from CV]',
       '',
-      'Extracted text (preview):',
-      text.substring(0, 2000) + (text.length > 2000 ? '...' : ''),
+      'Extracted text:',
+      text,
     ].join('\n'),
     raw_text: text,
   };

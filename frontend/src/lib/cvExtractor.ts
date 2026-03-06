@@ -29,6 +29,31 @@ interface LayoutLine {
 }
 
 /**
+ * Joins text fragments from a PDF line, avoiding spurious spaces inside
+ * URLs and email addresses where PDF renderers may split tokens at
+ * hyphens, slashes, or dots.
+ */
+function joinTextFragments(fragments: string[]): string {
+  if (fragments.length === 0) return '';
+  let result = fragments[0];
+  for (let i = 1; i < fragments.length; i++) {
+    const prev = result;
+    const next = fragments[i];
+    const needsNoSpace =
+      prev.endsWith('/') ||
+      prev.endsWith('-') ||
+      prev.endsWith('.') ||
+      prev.endsWith('@') ||
+      next.startsWith('/') ||
+      next.startsWith('-') ||
+      next.startsWith('.') ||
+      next.startsWith('@');
+    result += needsNoSpace ? next : ` ${next}`;
+  }
+  return result;
+}
+
+/**
  * Groups raw PDF text items into lines based on their Y coordinate.
  * Items that share approximately the same Y are merged into a single line
  * and sorted left-to-right by X.
@@ -75,7 +100,7 @@ function groupIntoLines(items: unknown[]): LayoutLine[] {
   lines.push(current);
 
   return lines.map((l) => ({
-    text: l.texts.join(' ').trim(),
+    text: joinTextFragments(l.texts).trim(),
     y: l.y,
     maxHeight: l.maxHeight,
   }));
